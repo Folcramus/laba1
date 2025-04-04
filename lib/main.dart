@@ -8,6 +8,7 @@ class TravelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: TravelScreen(),
       theme: ThemeData.dark().copyWith(
         primaryColor: Colors.blue,
@@ -34,28 +35,38 @@ class _TravelScreenState extends State<TravelScreen> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Your dream travels in one place"),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade300, // Цвет фона (неактивный таб)
-              borderRadius: BorderRadius.circular(30), // Закругленные углы
-              ),
-              
+        toolbarHeight: 100.0,
+  title: const Text("Your dream travels in one place"),
+  
+  actions: [
+    Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        height: 90.0,
+        
+        child: ClipRRect(
+         
+          child: Image.asset(
+            'travel_logo.png',  // Путь к картинке
+            width: 78,              // Размер картинки
+            height: 78,
+            fit: BoxFit.cover,      // Масштабирование
+               ),
+             ),
             ),
-          )
+          ),
         ],
         bottom: TabBar(
           controller: _tabController,
+          padding: const EdgeInsets.all(8.0),
+          
           indicator: BoxDecoration(
             borderRadius: BorderRadius.circular(40), 
-            color: Colors.white
+            color: Colors.white,
+        
             ),
             labelColor: Colors.black, // Цвет текста активного таба
-        unselectedLabelColor: Colors.black54, // Цвет текста неактивного таба
+        unselectedLabelColor: const Color.fromARGB(255, 255, 255, 255), // Цвет текста неактивного таба
           tabs: const [
             Tab(text: "Trips"),
             Tab(text: "Memories"),
@@ -65,6 +76,7 @@ class _TravelScreenState extends State<TravelScreen> with SingleTickerProviderSt
       ),
       body: TabBarView(
         controller: _tabController,
+        
         children: [
           Center(child: Text("No memories yet.")),
           TripList()
