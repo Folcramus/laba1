@@ -1,185 +1,206 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(TravelApp());
+  runApp(TravelApp()); // Запуск главного виджета приложения
 }
 
+// Основной StatelessWidget приложения
 class TravelApp extends StatelessWidget {
   const TravelApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: TravelScreen(),
+      debugShowCheckedModeBanner: false, // Убираем баннер отладки
+      home: TravelScreen(), // Указываем основной экран
       theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.blue,
+        primaryColor: Colors.blue, // Устанавливаем тему приложения
       ),
     );
   }
 }
 
+// StatefulWidget, т.к. будет использоваться TabController
 class TravelScreen extends StatefulWidget {
   const TravelScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _TravelScreenState createState() => _TravelScreenState();
+  TravelScreenState createState() => TravelScreenState();
 }
 
-class _TravelScreenState extends State<TravelScreen> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+// Состояние для TravelScreen с миксином SingleTickerProviderStateMixin
+class TravelScreenState extends State<TravelScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController; // Контроллер вкладок (Tabs)
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this); // Инициализация контроллера для двух вкладок
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Верхняя панель приложения (AppBar)
       appBar: AppBar(
-        toolbarHeight: 100.0,
-          title: const Text(
-                  "Your dream travels in one place",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-  
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
-                height: 90.0,
-                
-                child: ClipRRect(
-                
-                  child: Image.asset(
-                    'travel_logo.png',  // Путь к картинке
-                    width: 78,              // Размер картинки
-                    height: 78,
-                    fit: BoxFit.cover,      // Масштабирование
-                      ),
-                    ),
-                    ),
-                  ),
-                ],
-                    bottom: PreferredSize(
-                preferredSize: Size.fromHeight(60),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  child: Container(
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(230, 231, 233, 1),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                        color: Colors.black,
-                        offset: const Offset(-4, 4), // Влево и вниз
-                        blurRadius: 6,
-                        spreadRadius: 1,
-                        
-                        ),
-                      ],
-                    ),
-                    child: TabBar(
-                      padding: const EdgeInsets.all(3),
-                      dividerColor: Colors.transparent,
-                      controller: _tabController,
-                      indicator: BoxDecoration(
-                        
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      labelColor: Colors.black,
-                      unselectedLabelColor: const Color.fromARGB(255, 0, 0, 0),
-                      tabs: const [
-                        Tab(text: "Trips"),
-                        Tab(text: "Memories"),
-                      ],
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      labelStyle: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ),
+        toolbarHeight: 100.0, // Высота панели
+        title: const Text(
+          "Your dream travels in one place", 
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          softWrap: true,
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        // Иконка/логотип справа
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SizedBox(
+              height: 90.0,
+              child: ClipRRect(
+                child: Image.asset(
+                  'travel_logo.png', 
+                  width: 78,
+                  height: 78,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-              body: TabBarView(
-                controller: _tabController,
-                
-                children: [
-                  Center(child: Text("No memories yet.")),
-                  TripList()
+          ),
+        ],
+        // Нижняя часть AppBar — TabBar
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(60), 
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Container(
+              height: 45,
+              decoration: BoxDecoration(
+                color: const Color.fromRGBO(230, 231, 233, 1), 
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    offset: const Offset(-4, 4),
+                    blurRadius: 6,
+                    spreadRadius: 1,
+                  ),
                 ],
               ),
-              bottomNavigationBar: BottomNavigationBar(
-                backgroundColor: Colors.white, // Устанавливаем белый фон
-                type: BottomNavigationBarType.fixed, // Чтобы фон полностью был белым
-                selectedItemColor: const Color.fromARGB(255, 78, 137, 232), // Цвет выбранного элемента
-                unselectedItemColor: Colors.grey, // Цвет невыбранных элементов
-                items: const [
-                  BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-                  BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Calendar"),
-                  BottomNavigationBarItem(icon: Icon(Icons.support), label: "Assistance"),
-                  BottomNavigationBarItem(icon: Icon(Icons.star), label: "Premium"),
-                  BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
-                ],
-              ),
-              floatingActionButton:  Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(16.0),
-              child: FloatingActionButton.extended(
-                onPressed: () {},
-                backgroundColor: Color.fromARGB(255, 78, 137, 232),
-              
-                label: Text("Add memories",
-                style: TextStyle(
-                  color: Colors.white
-                ),),
-              ),
-              ),
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-            );
-          }
-        }
-
-        class TripList extends StatelessWidget {
-          const TripList({super.key});
-
-          @override
-          Widget build(BuildContext context) {
-            return ListView(
-              padding: const EdgeInsets.all(16.0),
-              
-              children: [
-                travelCard("My first travel with my wife and kids", "08.08.2023 - 30.08.2023", "trip1.png"),
-                travelCard("My second travel with my wife and kids", "08.08.2023 - 30.08.2023", "trip2.png"),
-              ],
-            );
-          }
-
-          Widget travelCard(String title, String date, String imagePath) {
-            return Card(
-              
-              margin: const EdgeInsets.symmetric(vertical: 8.0),
-              color: Color.fromARGB(255, 240, 240, 242),
-              child: ListTile(
-                
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.asset(imagePath, width: 100, height: 100, fit: BoxFit.cover),
+              child: TabBar(
+                padding: const EdgeInsets.all(3),
+                dividerColor: Colors.transparent,
+                controller: _tabController, // Привязка TabBar к контроллеру
+                indicator: BoxDecoration(
+                  color: Colors.white, // Индикатор активной вкладки
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                title: Text(title, 
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                subtitle: Text(date),
+                labelColor: Colors.black,
+                unselectedLabelColor: const Color.fromARGB(255, 0, 0, 0),
+                tabs: const [
+                  Tab(text: "Trips"),
+                  Tab(text: "Memories"),
+                ],
+                indicatorSize: TabBarIndicatorSize.tab,
+                labelStyle: const TextStyle(fontWeight: FontWeight.w600),
               ),
-            );
-          }
-        }
+            ),
+          ),
+        ),
+      ),
+      // Основное содержимое экрана
+      body: TabBarView(
+        controller: _tabController, // Связь с TabController
+        children: [
+          Center(child: Text("No memories yet.")), 
+          TripList(), 
+        ],
+      ),
+      // Нижняя навигация (меню)
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color.fromARGB(255, 78, 137, 232),
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Calendar"),
+          BottomNavigationBarItem(icon: Icon(Icons.support), label: "Assistance"),
+          BottomNavigationBarItem(icon: Icon(Icons.star), label: "Premium"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
+        ],
+      ),
+      // Кнопка добавления воспоминаний
+      floatingActionButton: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(16.0),
+        child: FloatingActionButton.extended(
+          onPressed: () {}, // Пока не реализована логика
+          backgroundColor: Color.fromARGB(255, 78, 137, 232),
+          label: Text(
+            "Add memories",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
+
+// Данные для списка поездок
+final List<String> titles = <String>[
+  'My first travel with my wife and kids',
+  'My second travel with my wife and kids'
+];
+
+final List<String> dates = <String>[
+  '08.08.2023 - 30.08.2023',
+  '08.08.2023 - 30.08.2023'
+];
+
+final List<String> images = <String>[
+  'trip1.png',
+  'trip2.png'
+];
+
+// Виджет, отображающий список поездок
+class TripList extends StatelessWidget {
+  const TripList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+      itemCount: 2, // Количество элементов в списке
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          margin: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            color: Color.fromARGB(255, 240, 240, 242), // Цвет фона карточки
+          ),
+          child: ListTile(
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0), // Скругление картинки
+              child: Image.asset(
+                images[index], // Изображение поездки
+                width: 70,
+                height: 70,
+                fit: BoxFit.cover,
+              ),
+            ),
+            title: Text(
+              titles[index],
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+            subtitle: Text(dates[index]), // Дата поездки
+          ),
+        );
+      },
+    );
+  }
+}
