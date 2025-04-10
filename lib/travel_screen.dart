@@ -11,19 +11,15 @@ class TravelScreen extends StatefulWidget {
 
 // Состояние для TravelScreen с миксином SingleTickerProviderStateMixin
 class TravelScreenState extends State<TravelScreen> with SingleTickerProviderStateMixin {
-  late TabController _tabController; // Контроллер вкладок (Tabs)
+  late final TabController _tabController = TabController(length: 2, vsync: this);
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this); // Инициализация контроллера для двух вкладок
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // Верхняя панель приложения (AppBar)
       appBar: AppBar(
+      backgroundColor: Color.fromARGB(228, 21, 27, 49),
         toolbarHeight: 100.0, // Высота панели
         title: const Text(
           "Your dream travels in one place", 
@@ -74,7 +70,7 @@ class TravelScreenState extends State<TravelScreen> with SingleTickerProviderSta
               child: TabBar(
                 padding: const EdgeInsets.all(3),
                 dividerColor: Colors.transparent,
-                controller: _tabController, // Привязка TabBar к контроллеру
+                controller: _tabController, 
                 indicator: BoxDecoration(
                   color: Colors.white, // Индикатор активной вкладки
                   borderRadius: BorderRadius.circular(10),
@@ -94,11 +90,26 @@ class TravelScreenState extends State<TravelScreen> with SingleTickerProviderSta
       ),
       // Основное содержимое экрана
       body: TabBarView(
-        controller: _tabController, // Связь с TabController
-        children: [
-          Center(child: Text("No memories yet.")), 
-          TripList(), 
+      
+        controller: _tabController, 
+       children: [
+          Container(
+            color: const Color.fromARGB(228, 21, 27, 49),
+            width: double.infinity,
+            height: double.infinity,
+            child: const Center(
+              child: Text(
+                "No memories yet.",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ),
+          TripListScreen(),
         ],
+
       ),
       // Нижняя навигация (меню)
       bottomNavigationBar: BottomNavigationBar(

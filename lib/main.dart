@@ -15,7 +15,7 @@ class TravelApp extends StatelessWidget {
       debugShowCheckedModeBanner: false, // Убираем баннер отладки
       home: TravelScreen(), // Указываем основной экран
       theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.blue, // Устанавливаем тему приложения
+        scaffoldBackgroundColor: Color.fromARGB(228, 21, 27, 49), // Устанавливаем тему приложения
       ),
     );
   }
