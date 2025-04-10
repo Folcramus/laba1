@@ -17,7 +17,7 @@ class TripListScreen extends StatefulWidget {
 }
 
 class _TripListScreenState extends State<TripListScreen> {
-  // Список поездок
+
   late List<Trip> trips = [
       Trip(
         title: 'My first travel with my wife and kids',

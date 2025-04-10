@@ -9,7 +9,7 @@ class TravelScreen extends StatefulWidget {
   TravelScreenState createState() => TravelScreenState();
 }
 
-// Состояние для TravelScreen с миксином SingleTickerProviderStateMixin
+
 class TravelScreenState extends State<TravelScreen> with SingleTickerProviderStateMixin {
   late final TabController _tabController = TabController(length: 2, vsync: this);
 
@@ -17,10 +17,10 @@ class TravelScreenState extends State<TravelScreen> with SingleTickerProviderSta
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Верхняя панель приложения (AppBar)
+
       appBar: AppBar(
       backgroundColor: Color.fromARGB(228, 21, 27, 49),
-        toolbarHeight: 100.0, // Высота панели
+        toolbarHeight: 100.0, 
         title: const Text(
           "Your dream travels in one place", 
           maxLines: 2,
@@ -31,7 +31,7 @@ class TravelScreenState extends State<TravelScreen> with SingleTickerProviderSta
             fontWeight: FontWeight.w700,
           ),
         ),
-        // Иконка/логотип справа
+
         actions: [
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -48,7 +48,7 @@ class TravelScreenState extends State<TravelScreen> with SingleTickerProviderSta
             ),
           ),
         ],
-        // Нижняя часть AppBar — TabBar
+
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(60), 
           child: Padding(
@@ -111,7 +111,7 @@ class TravelScreenState extends State<TravelScreen> with SingleTickerProviderSta
         ],
 
       ),
-      // Нижняя навигация (меню)
+
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
@@ -125,12 +125,12 @@ class TravelScreenState extends State<TravelScreen> with SingleTickerProviderSta
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
         ],
       ),
-      // Кнопка добавления воспоминаний
+
       floatingActionButton: Container(
         width: double.infinity,
         padding: EdgeInsets.all(16.0),
         child: FloatingActionButton.extended(
-          onPressed: () {}, // Пока не реализована логика
+          onPressed: () {}, 
           backgroundColor: Color.fromARGB(255, 78, 137, 232),
           label: Text(
             "Add memories",
